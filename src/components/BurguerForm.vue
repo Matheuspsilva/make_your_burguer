@@ -2,7 +2,7 @@
     <div>
         <p>Componente de mensagem</p>
         <div>
-            <form action="" id="burguer-form">
+            <form action="" id="burguer-form" @submit="createBurguer">
                 <div class="input-container">
                     <label for="nome">Nome do cliente: </label>
                     <input type="text" id="nome" name="nome" v-model="nome" placeholder="Insira seu nome">
@@ -12,7 +12,7 @@
                     <label for="pao">Escolha o pao</label>
                     <select name="pao" id="pao" v-model="pao">
                         <option value="">Selecione seu pão</option>
-                        <option v-for="pao in paes" value="pao.tipo" :key="pao.id">{{ pao.tipo }}</option>
+                        <option v-for="pao in paes" :value="pao.tipo" :key="pao.id">{{ pao.tipo }}</option>
                     </select>
                 </div>
 
@@ -20,7 +20,7 @@
                     <label for="carne">Escolha a carne</label>
                     <select name="carne" id="carne" v-model="carne">
                         <option value="">Selecione a carne</option>
-                        <option v-for="carne in carnes" value="carne.tipo" :key="carne.id">{{ carne.tipo }}</option>
+                        <option v-for="carne in carnes" :value="carne.tipo" :key="carne.id">{{ carne.tipo }}</option>
                     </select>
                 </div>
 
@@ -55,7 +55,7 @@ export default {
         pao: null,
         carne: null,
         opcionais: [],
-        status: "Solicitado",
+        // status: "Solicitado",
         msg: null
         }
     }, 
@@ -67,6 +67,36 @@ export default {
             this.paes = data.paes;
             this.carnes = data.carnes;
             this.opcionaisdata = data.opcionais;
+        },
+        async createBurguer(e){
+            e.preventDefault();
+
+            const data = {
+                nome: this.nome,
+                carne: this.carne,
+                pao: this.pao,
+                opcionais: Array.from(this.opcionais),
+                status: "Solicitado"
+            }
+
+            const dataJson = JSON.stringify(data);
+
+            const req = await fetch("http://localhost:3000/burgers", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: dataJson
+            });
+
+            const res = await req.json();
+
+            //Limpar campos form 
+            this.nome = "";
+            this.carne = "";
+            this.pao = "";
+            this.opcionais = "";
+
         }
     },
     mounted(){
