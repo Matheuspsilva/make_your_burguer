@@ -120,6 +120,29 @@
       ],
       "status": "Solicitado",
       "id": 6
+    },
+    {
+      "nome": "João",
+      "carne": "Alcatra",
+      "pao": "Parmesão e Orégano",
+      "opcionais": [
+        "Bacon",
+        "Cheddar"
+      ],
+      "status": "Solicitado",
+      "id": 7
+    },
+    {
+      "nome": "Pedro",
+      "carne": "Veggie burger",
+      "pao": "Integral",
+      "opcionais": [
+        "Cebola roxa",
+        "Pepino",
+        "Tomate"
+      ],
+      "status": "Solicitado",
+      "id": 8
     }
   ]
 }
